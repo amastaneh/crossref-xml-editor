@@ -1,7 +1,7 @@
 # Crossref XML Editor
 I created this project for extracting articles from Crossref Issue XML file.
 
-![image](https://user-images.githubusercontent.com/6195199/154432955-badff470-b161-4984-b6b7-e2514338a081.png)
+![image](https://user-images.githubusercontent.com/6195199/154432955-badff470-b161-4984-b6b7-e2514338a081.png | width=480)
 
 ### Getting Started with Create React App
 
