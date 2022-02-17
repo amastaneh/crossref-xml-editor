@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/crossref-xml-editor/static/css/main.496c1cae.css",
-    "main.js": "/crossref-xml-editor/static/js/main.baebe0ec.js",
+    "main.js": "/crossref-xml-editor/static/js/main.49b832e3.js",
     "index.html": "/crossref-xml-editor/index.html",
     "main.496c1cae.css.map": "/crossref-xml-editor/static/css/main.496c1cae.css.map",
-    "main.baebe0ec.js.map": "/crossref-xml-editor/static/js/main.baebe0ec.js.map"
+    "main.49b832e3.js.map": "/crossref-xml-editor/static/js/main.49b832e3.js.map"
   },
   "entrypoints": [
     "static/css/main.496c1cae.css",
-    "static/js/main.baebe0ec.js"
+    "static/js/main.49b832e3.js"
   ]
 }
