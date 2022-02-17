@@ -1,0 +1,8 @@
+@use "sass:map";
+@import url("https://fonts.googleapis.com/css2?family=Roboto");
+$font-family-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji" !default;
+$enable-negative-margins: true;
+@import "./../../node_modules/bootstrap/scss/bootstrap";
+
