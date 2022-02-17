@@ -11,10 +11,10 @@ export default function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<PageLayout />}>
+                <Route element={<PageLayout />}>
                     {/* =============== Main Pages =============== */}
                     <Route index element={<PageExport />} />
-                    <Route path="/export" element={<PageExport />} />
+                    <Route path="export" element={<PageExport />} />
                     {/* =============== Other Pages =============== */}
                     <Route path="*" element={<Page404 />} />
                 </Route>
