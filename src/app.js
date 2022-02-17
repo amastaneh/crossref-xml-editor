@@ -9,7 +9,7 @@ import PageExport from './pages/PageExport';
 
 export default function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Routes>
                 <Route element={<PageLayout />}>
                     {/* =============== Main Pages =============== */}

@@ -1,8 +1,8 @@
 {
   "name": "crossref-xml-editor",
-  "version": "1.0.53",
+  "version": "1.0.55",
   "private": true,
-  "homepage": "https://amastaneh.github.io/crossref-xml-editor",
+  "homepage": "https://amastaneh.github.io/crossref-xml-editor/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.0.0",
     "@testing-library/jest-dom": "^5.16.2",
