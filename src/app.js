@@ -14,6 +14,7 @@ export default function App() {
                 <Route element={<PageLayout />}>
                     {/* =============== Main Pages =============== */}
                     <Route path="/" element={<PageExport />} />
+                    <Route path="/export" element={<PageExport />} />
                     {/* =============== Other Pages =============== */}
                     <Route path="*" element={<Page404 />} />
                 </Route>

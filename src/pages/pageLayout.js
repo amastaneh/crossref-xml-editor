@@ -17,7 +17,7 @@ export default function PageLayout() {
         </main>
         <footer className="container my-5">
             <div className="row text-center text-muted">
-                <small className="mt-5">©{new Date().getFullYear()}</small>
+                <small className="mt-5">©{new Date().getFullYear()} - v{require('./../../package.json')?.version ?? 0.0}</small>
             </div>
         </footer>
     </Fragment>
