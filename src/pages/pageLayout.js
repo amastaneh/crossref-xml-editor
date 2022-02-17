@@ -10,6 +10,7 @@ export default function PageLayout() {
                 <h1>Crossref XML Editor</h1>
                 <p>This project created for extracting articles from Crossref Issue XML file.</p>
             </div>
+            <a className="github-fork-ribbon" href="https://github.com/amastaneh/crossref-xml-editor" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
         </header>
         <main className="container my-5">
             <Outlet context={[context, setContext]} />
