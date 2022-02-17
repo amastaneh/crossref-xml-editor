@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "https://amastaneh.github.io/crossref-xml-editor/static/css/main.496c1cae.css",
-    "main.js": "https://amastaneh.github.io/crossref-xml-editor/static/js/main.349b203f.js",
+    "main.js": "https://amastaneh.github.io/crossref-xml-editor/static/js/main.53b28e8b.js",
     "index.html": "https://amastaneh.github.io/crossref-xml-editor/index.html",
     "main.496c1cae.css.map": "https://amastaneh.github.io/crossref-xml-editor/static/css/main.496c1cae.css.map",
-    "main.349b203f.js.map": "https://amastaneh.github.io/crossref-xml-editor/static/js/main.349b203f.js.map"
+    "main.53b28e8b.js.map": "https://amastaneh.github.io/crossref-xml-editor/static/js/main.53b28e8b.js.map"
   },
   "entrypoints": [
     "static/css/main.496c1cae.css",
-    "static/js/main.349b203f.js"
+    "static/js/main.53b28e8b.js"
   ]
 }
