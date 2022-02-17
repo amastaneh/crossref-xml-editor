@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
-import { Outlet } from "react-router-dom";
-
+import { Outlet, Link } from "react-router-dom";
 
 export default function PageLayout() {
     const [context, setContext] = React.useState(null);
@@ -18,6 +17,9 @@ export default function PageLayout() {
         <footer className="container my-5">
             <div className="row text-center text-muted">
                 <small className="mt-5">©{new Date().getFullYear()} - v{require('./../../package.json')?.version ?? 0.0}</small>
+                <Link to="/export">Export1</Link>
+                <Link to="/">Export2</Link>
+                <Link to="export">Export3</Link>
             </div>
         </footer>
     </Fragment>

@@ -11,9 +11,9 @@ export default function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<PageLayout />}>
+                <Route path="/" element={<PageLayout />}>
                     {/* =============== Main Pages =============== */}
-                    <Route path="/" element={<PageExport />} />
+                    <Route index element={<PageExport />} />
                     <Route path="/export" element={<PageExport />} />
                     {/* =============== Other Pages =============== */}
                     <Route path="*" element={<Page404 />} />
