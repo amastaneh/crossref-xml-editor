@@ -7,7 +7,7 @@ export default function PageLayout() {
     return <Fragment>
         <header className="container">
             <div className="row text-center mt-5 pt-5">
-                <h1>Crossref XML Editor</h1>
+                <h1>Crossref - Article from Issue XML</h1>
                 <p>This project created for extracting articles from Crossref Issue XML file.</p>
             </div>
             <a className="github-fork-ribbon" href="https://github.com/amastaneh/crossref-xml-editor" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>

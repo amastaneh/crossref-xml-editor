@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 //import { useOutletContext } from "react-router-dom";
 import { XMLParser, XMLBuilder } from "fast-xml-parser";
-
+import xml2js from 'xml2js';
 
 export default function PageExport() {
     //const [context, setContext] = useOutletContext({});
     const [disable, setDisable] = React.useState(false);
-    const [selectedArticleIndex, setSelectedArticleIndex] = React.useState(null);
+    const [selectedArticleIndex, setSelectedArticleIndex] = React.useState(-1);
     const [dataset, setDataset] = React.useState(null);
 
 
@@ -14,42 +14,47 @@ export default function PageExport() {
         e.preventDefault();
         setDisable(true);
         try {
-            const selectedIssue = e.target.files[0]
-            const fileReader = new FileReader();
-            console.log("selectedIssue", selectedIssue);
+            const fileSelected = e.target.files[0]
+            console.log("1- fileSelected", fileSelected);
 
-            fileReader.readAsText(selectedIssue);
-            console.log("fileReader", fileReader);
+            const fileSelectedObject = new FileReader();
+            fileSelectedObject.readAsText(fileSelected);
+            console.log("2- fileSelectedObject", fileSelectedObject);
 
-            fileReader.onloadend = evt => {
-                const readerData = evt.target.result;
-                const xmlIssue = new XMLParser().parse(readerData);
-                console.log("xmlIssue", xmlIssue);
+            fileSelectedObject.onloadend = evt => {
+                const xmlString = evt.target.result;
+                console.log("3- xmlString", xmlString);
 
-                const xmlArticles = xmlIssue.doi_batch.body.journal
-                console.log("xmlArticles", xmlArticles);
-                if ((xmlArticles?.length ?? 0) < 1) throw new Error("No articles found in XML");
+                new xml2js.Parser()
+                    .parseStringPromise(xmlString)
+                    .then(function (xmlIssue) {
+                        console.log("4- xmlIssue", xmlIssue);
 
-                // Creating...
-                const articles = xmlArticles?.map((article, articleIndex) => {
-                    const articleNumber = ("0000" + (articleIndex + 1)).slice(-4);
-                    const articleTitle = `${articleNumber} - ${article.journal_article.titles.title}`;
-                    const articleFileName = `${articleNumber}-${article.journal_article.titles.title?.toLowerCase()?.replace(/\s/g, "-")}.xml`;
-                    return {
-                        index: articleIndex,
-                        title: articleTitle,
-                        filename: articleFileName,
-                        article,
-                    }
-                })
-                console.log("articles", articles);
+                        const xmlArticles = xmlIssue.doi_batch.body[0].journal
+                        console.log("5- xmlArticles", xmlArticles);
+                        if ((xmlArticles?.length ?? 0) < 1) throw new Error("No articles found in XML");
 
-                // Save to recat state
-                setDataset({ xmlIssue, articles });
+                        // Creating...
+                        const articles = xmlArticles?.map((article, articleIndex) => {
+                            const articleNumber = ("0000" + (articleIndex + 1)).slice(-4);
+                            const articleTitle = `${articleNumber} - ${article.journal_article[0].titles[0].title[0]}`;
+                            const articleFileName = `${articleNumber}-${article.journal_article[0].titles[0].title[0]?.toLowerCase()?.replace(/\s/g, "-")}.xml`;
+                            return {
+                                index: articleIndex,
+                                title: articleTitle,
+                                filename: articleFileName,
+                                article,
+                            }
+                        })
+                        console.log("6- articles", articles);
+
+                        // Save to recat state
+                        setDataset({ xmlIssue, articles });
+                    })
             }
         }
         catch (ex) {
-            alert("There is some unexpected error. Please try again! or read details in console.");
+            alert("There is some unexpected error. Please try again! or read details from console.");
             console.log("AMA Exception: ", ex);
         }
         setDisable(false);
@@ -57,25 +62,22 @@ export default function PageExport() {
 
     function handleExport(event) {
         event.preventDefault();
+        if (selectedArticleIndex < 0) return;
         setDisable(true);
 
         try {
             // Find selected article
             const selectedArticle = dataset?.articles?.[selectedArticleIndex];
-            console.log("Selected Article", selectedArticle);
+            console.log("1- Selected Article", selectedArticle);
+
+            // Create Issue
+            let xmlIssue2 = dataset?.xmlIssue
+            xmlIssue2.doi_batch.body[0].journal = selectedArticle.article
+            console.log("2- New Issue", xmlIssue2);
 
             // Create XML
-            let xmlIssue = dataset?.xmlIssue
-            xmlIssue.doi_batch.body.journal = selectedArticle.article
-            let xmlContent = new XMLBuilder({
-                format: true,
-            }).build(xmlIssue);
-            console.log("Selecetd Article XML", xmlIssue);
-
-            // Correction
-            xmlContent = xmlContent.replace('<?xml></?xml>', '<?xml version="1.0" encoding="UTF-8"?>');
-            xmlContent = xmlContent.replace('<doi_batch>', '<doi_batch xmlns="http://www.crossref.org/schema/4.3.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jats="http://www.ncbi.nlm.nih.gov/JATS1" xmlns:ai="http://www.crossref.org/AccessIndicators.xsd" version="4.3.6" xsi:schemaLocation="http://www.crossref.org/schema/4.3.6 http://www.crossref.org/schema/deposit/crossref4.3.6.xsd">');
-            console.log("Selecetd Article XML", xmlContent);
+            let xmlContent = new xml2js.Builder().buildObject(xmlIssue2)
+            console.log("3- New Issue", xmlContent);
 
             // Export XML
             const url = window.URL.createObjectURL(new Blob([xmlContent], { type: "text/xml" }));
@@ -111,14 +113,15 @@ export default function PageExport() {
                 <div className="col-12 col-md-6 offset-md-3 mb-3">
                     <label htmlFor="xmlFile" className="form-label">Crossref Issue XML File:</label>
                     <select className="form-select" onChange={(e) => setSelectedArticleIndex(e.currentTarget.value)}>
+                        <option value={-1}>-- Please select an article --</option>
                         {dataset?.articles.map(article => <option key={article.index} value={article.index}>{article.title}</option>)}
                     </select>
                 </div>
                 <div className="col-12 text-center">
                     <button
-                        className={`btn text-uppercase btn-${disable ? 'secondary' : 'success'}`}
+                        className={`btn text-uppercase btn-${(disable || selectedArticleIndex < 0) ? 'secondary' : 'success'}`}
                         type="submit"
-                        disabled={disable}>
+                        disabled={disable || selectedArticleIndex < 0}>
                         <span>Export</span>
                     </button>
                 </div>
