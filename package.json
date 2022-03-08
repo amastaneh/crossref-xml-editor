@@ -1,6 +1,6 @@
 {
   "name": "crossref-xml-editor",
-  "version": "1.0.68",
+  "version": "1.0.69",
   "private": true,
   "homepage": "https://amastaneh.github.io/crossref-xml-editor",
   "dependencies": {
